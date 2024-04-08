@@ -149,9 +149,9 @@
   </head>
   <body>
     <section class="container">
-        <a href="/" style="text-decoration: none; color: black; font-size: 15px;">« back</a>
+        <a href="/" style="text-decoration: none; color: black; font-size: 17px;">« back</a>
       <header>Registration Form <br> (<%= formname %>) </header>
-      <form action="/register" method="post" enctype="multipart/form-data" class="form">
+      <form action="/register/<%= name %>" method="post" enctype="multipart/form-data" class="form">
         <div class="input-box">
           <label>Full Name</label>
           <input type="text" placeholder="Enter full name" name="name" required />
@@ -173,7 +173,7 @@
 
         <div class="input-box">
           <label>Email Address</label>
-          <input type="text" placeholder="Enter email address" name="email" required />
+          <input type="email" placeholder="Enter email address" name="email" required />
         </div>
 
         <div class="column">

@@ -13,7 +13,7 @@ const multer= require('multer')
 const {storage} = require('./cloudinary/cloudinary.js')
 const upload= multer({storage})
 const MongoDBStore= require("connect-mongo");
-//const dbUrl= 'mongodb://localhost:27017/gmun'
+// const dbUrl= 'mongodb://localhost:27017/gmun'
 const dbUrl= process.env.DB_URL;
 const secret= process.env.SECRET || 'thisshouldbeabettersecret'
 
@@ -64,33 +64,37 @@ app.use((req, res, next)=>{
     next();
 });
 
+const mp= {
+    'unsc': 'United Nations Security Council',
+    'unhrc': 'United Nations Human Rights Council',
+    'ip': 'International Press',
+    'loksabha': 'Loksabha',
+    'hogwarts': 'Hogwarts'
+}
+
 app.get('/', (req, res)=>{
     res.render('templates/home.ejs');
 })
 
 app.get('/register/:name', (req, res)=>{
     const {name}= req.params;
-    const mp= {
-        'unsc': 'United Nations Security Council',
-        'unhrc': 'United Nations Human Rights Council',
-        'ip': 'International Press',
-        'loksabha': 'Loksabha',
-        'hogwarts': 'Hogwarts'
-    }
     const formname= mp[name];
-    res.render('templates/form.ejs', {formname});
+    res.render('templates/form.ejs', {formname, name});
 })
 
 
-app.post('/register', upload.array('image'), async(req, res)=>{
+app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
     // res.send(req.body)
     try{
+        const {evtname}= req.params;
+        const cmt= mp[evtname];
         const {name, phone, whatsapp, email, mun_attended, country_pref}=req.body;
         const newReg= new Registration({name, phone, whatsapp, email, mun_attended, country_pref});
-        // return res.send(req.files)
+
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
-        // return res.send(newReg)
-        await newReg.save()
+
+        newReg.committee= cmt;
+        await newReg.save();
         req.flash('success', "Regitration Successful")
         res.redirect('/')
     }
