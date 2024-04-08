@@ -13,8 +13,8 @@ const multer= require('multer')
 const {storage} = require('./cloudinary/cloudinary.js')
 const upload= multer({storage})
 const MongoDBStore= require("connect-mongo");
-// const dbUrl= 'mongodb://localhost:27017/gmun'
-const dbUrl= process.env.DB_URL;
+const dbUrl= 'mongodb://localhost:27017/gmun'
+// const dbUrl= process.env.DB_URL;
 const secret= process.env.SECRET || 'thisshouldbeabettersecret'
 
 app.set('views', path.join(__dirname, 'views'))
@@ -68,11 +68,19 @@ app.get('/', (req, res)=>{
     res.render('templates/home.ejs');
 })
 
-app.get('/register', (req, res)=>{
-    // const event= req.params.event;
-    // console.log(eventname)
-    res.render('templates/form.ejs')
+app.get('/register/:name', (req, res)=>{
+    const {name}= req.params;
+    const mp= {
+        'unsc': 'United Nations Security Council',
+        'unhrc': 'United Nations Human Rights Council',
+        'ip': 'International Press',
+        'loksabha': 'Loksabha',
+        'hogwarts': 'Hogwarts'
+    }
+    const formname= mp[name];
+    res.render('templates/form.ejs', {formname});
 })
+
 
 app.post('/register', upload.array('image'), async(req, res)=>{
     // res.send(req.body)
@@ -95,30 +103,3 @@ app.post('/register', upload.array('image'), async(req, res)=>{
 app.listen(8080, ()=>{
     console.log('Server started successfully on port 8080')
 })
-
-/**
- * about debsoc
- *
- * about GMUN
- * about UNHRC
- * UNSC
- * LOK SABHA
- * International press
- * specail comittee
- *
- * something else coming soon
- *
- *
- *
- */
-
-/**
- * name
- * email
- * college
- * phone number
- * whatsapp number
- * payment ss
- * no. of mun attended
- * country preference
- */

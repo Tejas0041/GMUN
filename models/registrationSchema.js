@@ -11,6 +11,7 @@ const regSchema= new mongoose.Schema({
     whatsapp: Number,
     email: String,
     mun_attended: String,
+    college: String,
     country_pref: String,
     image: [ImageSchema]
 })
