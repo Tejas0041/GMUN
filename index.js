@@ -13,8 +13,8 @@ const multer= require('multer')
 const {storage} = require('./cloudinary/cloudinary.js')
 const upload= multer({storage})
 const MongoDBStore= require("connect-mongo");
-const dbUrl= 'mongodb://localhost:27017/gmun'
-// const dbUrl= process.env.DB_URL;
+//const dbUrl= 'mongodb://localhost:27017/gmun'
+const dbUrl= process.env.DB_URL;
 const secret= process.env.SECRET || 'thisshouldbeabettersecret'
 
 app.set('views', path.join(__dirname, 'views'))
