@@ -146,7 +146,7 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         };
 
         sgMail.send(msg)
-        .then(() => console.log('Email sent'))
+        .then(() => console.log(`Email sent: ${email} | ${cmt} | ${phone}`))
         .catch(error => console.error(error));
 
         res.redirect('/')
