@@ -13,7 +13,7 @@ const regSchema= new mongoose.Schema({
     mun_attended: String,
     college: String,
     committee: String,
-    country_pref: String,
+    country: Array,
     image: [ImageSchema]
 })
 

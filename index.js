@@ -84,12 +84,11 @@ app.get('/register/:name', (req, res)=>{
 
 
 app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
-    // res.send(req.body)
     try{
         const {evtname}= req.params;
         const cmt= mp[evtname];
-        const {name, phone, whatsapp, email, mun_attended, country_pref}=req.body;
-        const newReg= new Registration({name, phone, whatsapp, email, mun_attended, country_pref});
+        const {name, phone, whatsapp, email, mun_attended, country}=req.body;
+        const newReg= new Registration({name, phone, whatsapp, email, mun_attended, country});
 
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
 
@@ -107,3 +106,9 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
 app.listen(8080, ()=>{
     console.log('Server started successfully on port 8080')
 })
+
+
+// cloudinary dashboard
+/*
+https://console.cloudinary.com/console/c-4fdaf1ef66d49e556500f5d34957aa/media_library/search?q=&view_mode=mosaic
+*/
