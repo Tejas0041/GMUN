@@ -13,9 +13,13 @@ const multer= require('multer')
 const {storage} = require('./cloudinary/cloudinary.js')
 const upload= multer({storage})
 const MongoDBStore= require("connect-mongo");
-// const dbUrl= 'mongodb://localhost:27017/gmun'
-const dbUrl= process.env.DB_URL;
+const dbUrl= 'mongodb://localhost:27017/gmun'
+// const dbUrl= process.env.DB_URL;
 const secret= process.env.SECRET || 'thisshouldbeabettersecret'
+const sgMail = require('@sendgrid/mail');
+const sgMailApi= process.env.SENDGRID_API;
+
+sgMail.setApiKey(sgMailApi);
 
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -95,6 +99,56 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         newReg.committee= cmt;
         await newReg.save();
         req.flash('success', "Regitration Successful")
+
+        const msg = {
+            to: `${email}`,
+            from: 'tejaspawar62689@gmail.com',
+            subject: 'Registration Confirmation: Global Model United Nations Event by Debsoc, IIEST Shibpur',
+            html: `
+            <div>
+                Dear ${name}, <br> <br>
+                We are delighted to confirm your commitee registration <b>(${cmt})</b> for the  Global Model United Nations event organized by Debsoc at IIEST Shibpur. We are thrilled to have you join us for this enriching experience.
+                <br> <br>
+
+                Warm regards, <br>
+                Tejas Pawar <br>
+                (Lead Web Developer) <br>
+                Debsoc, IIEST Shibpur <br> <br>
+
+                <div style="display: flex; max-width: 350px; background-color:#181818; color:white; border-radius: 8px; margin-left: 2px">
+                    <div>
+                        <img style="max-width: 135px;" src="https://res.cloudinary.com/di7h49uue/image/upload/v1712674109/GMUN_IIEST_SHibpur_4_zdybku.png" alt="">
+                    </div>
+                    <hr>
+                    <div style="font-size: 10px; padding: 3px">
+                        <h5>IIEST GLOBAL MODEL UNITED NATIONS</h5>
+                        <h6>IIEST, Shibpur</h6>
+                        <div style="font-size: 8px;">
+                            <div>+91 8447436195 | iiestgmun@gmail.com</div>
+                            <div>Botanical Garden Area, Howrah <br> WB (711103)</div>
+                        </div>
+                        <br>
+                        <div style="display: flex;">
+                            <div style="margin-right: 8px;">
+                                <a href="https://www.instagram.com/debsociiests?igsh=MTJ2cGczM3UxZ3o4aw==" target="_blank">
+                                    <img style="max-width: 20px;" src="https://i2.wp.com/www.multarte.com.br/wp-content/uploads/2019/03/logo-instagram-png-fundo-transparente13.png?fit=2400,2400&ssl=1" alt="">
+                                </a>
+                            </div>
+                            <div>
+                                <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank">
+                                    <img style="max-width: 19px;" src="https://pngimg.com/d/linkedIn_PNG16.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+        };
+
+        sgMail.send(msg)
+        .then(() => console.log('Email sent'))
+        .catch(error => console.error(error));
+
         res.redirect('/')
     }
     catch(e){
