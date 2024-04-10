@@ -7,7 +7,6 @@ const app= express()
 const path= require('path')
 const mongoose = require('mongoose')
 const session= require('express-session');
-const flash= require('express-flash');
 const Registration= require('./models/registrationSchema.js')
 const multer= require('multer')
 const {storage, cloudinary} = require('./cloudinary/cloudinary.js')
@@ -22,6 +21,12 @@ const secret= process.env.SECRET || 'thisshouldbeabettersecret'
 const sgMail = require('@sendgrid/mail');
 const sgMailApi= process.env.SENDGRID_API;
 const {isAdmin}= require('./middleware.js');
+
+const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'
+];
+
 
 sgMail.setApiKey(sgMailApi);
 
@@ -63,7 +68,6 @@ const sessionConfig= {
 }
 
 app.use(session(sessionConfig));
-app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -74,8 +78,6 @@ passport.deserializeUser(Admin.deserializeUser());
 passport.use(new LocalStrategy(Admin.authenticate()));
 
 app.use((req, res, next)=>{
-    res.locals.success= req.flash('success');
-    res.locals.error= req.flash('error');
     res.locals.currentUser= req.user;
     next();
 });
@@ -108,10 +110,24 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
         newReg.committee= cmt;
 
-        newReg.date= 'test';
+        var today = new Date();
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+        var seconds = today.getSeconds();
+        var day = today.getDate();
+        var monthIndex = today.getMonth();
+        var year = today.getFullYear();
+
+        hours= (hours<10) ? '0' + hours : hours;
+        minutes = (minutes<10) ? '0' + minutes : minutes;
+        seconds = (seconds<10) ? '0' + seconds : seconds;
+        day = (day<10) ? '0' + day : day;
+        var month = monthNames[monthIndex];
+
+        var formattedDate = hours + ':' + minutes + ':' + seconds + ', ' + day + '-' + month + '-' + year;
+        newReg.date= formattedDate;
 
         await newReg.save();
-        req.flash('success', "Regitration Successful")
 
         const msg = {
             to: `${email}`,
@@ -165,7 +181,6 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         res.redirect('/')
     }
     catch(e){
-        req.flash('error', "There was an error occured while making your registration")
         res.redirect('/')
     }
 })
@@ -206,7 +221,7 @@ app.post('/deleteregistration/:id', isAdmin, async(req, res)=>{
     const reg= await Registration.findByIdAndDelete(id);
     try{
         await cloudinary.uploader.destroy(filename);
-        console.log(`Successfully delete image for ${r.name}, ${r.phone}`)
+        console.log(`Successfully deleted image for ${r.name}, ${r.phone}`)
     }catch(e){
         console.log('Error', e);
     }
