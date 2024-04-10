@@ -14,6 +14,7 @@ const regSchema= new mongoose.Schema({
     college: String,
     committee: String,
     country: Array,
+    date: String,
     image: [ImageSchema]
 })
 
