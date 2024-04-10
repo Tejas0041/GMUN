@@ -108,29 +108,7 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
         newReg.committee= cmt;
 
-        var today = new Date();
-
-        var monthNames = [
-            'January', 'February', 'March', 'April', 'May', 'June', 'July',
-            'August', 'September', 'October', 'November', 'December'
-        ];
-
-        var hours = today.getHours();
-        var minutes = today.getMinutes();
-        var seconds = today.getSeconds();
-        var day = today.getDate();
-        var monthIndex = today.getMonth();
-        var year = today.getFullYear();
-
-        hours= (hours<10) ? '0' + hours : hours;
-        minutes = (minutes<10) ? '0' + minutes : minutes;
-        seconds = (seconds<10) ? '0' + seconds : seconds;
-        day = (day<10) ? '0' + day : day;
-        var month = monthNames[monthIndex];
-
-        var formattedDate = hours + ' : ' + minutes + ' : ' + seconds + ', ' + day + '-' + month + '-' + year;
-
-        newReg.date= formattedDate;
+        newReg.date= 'test';
 
         await newReg.save();
         req.flash('success', "Regitration Successful")
