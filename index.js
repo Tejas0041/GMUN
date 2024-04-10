@@ -110,7 +110,8 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
         newReg.committee= cmt;
 
-        var today = new Date();
+        var time = new Date();
+        var today = new Date(time.getTime() + (5.5 * 60 * 60 * 1000));
         var hours = today.getHours();
         var minutes = today.getMinutes();
         var seconds = today.getSeconds();
