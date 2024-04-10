@@ -179,7 +179,6 @@ app.get('/admindashboard', isAdmin, async(req, res)=>{
     // const password= '';
     // const u= new Admin({username});
     // const newUser= await Admin.register(u, password);
-    console.log(registrations)
     res.render('templates/admindashboard.ejs', {registrations});
 })
 
@@ -190,7 +189,6 @@ app.post('/adminlogin', passport.authenticate('local', {failureRedirect: '/admin
 app.get('/registrations/:id', isAdmin, async(req, res)=>{
     const {id}= req.params;
     const reg= await Registration.findById(id);
-    console.log(reg);
     res.render('templates/viewregistration.ejs', {reg});
 })
 
