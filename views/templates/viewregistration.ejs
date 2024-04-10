@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>GMUN IIEST - Admin Login</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+</head>
+
+<body class="bg-dark">
+    <div class="container text-center">
+        <center>
+            <div class="row justify-content-center mt-2" style="max-width: 500px; margin-left: 50px;">
+                <div class="p-5" style="color: white;">
+                    <div id="back" style="color: aliceblue; text-align: left; cursor: pointer; font-weight: bold;">← back</div>
+                    <br>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="name" class="fw-bold">Name: </label>
+                            <span><%= reg.name %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">Phone No: </label>
+                            <span><%= reg.phone %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">Whatsapp No: </label>
+                            <span><%= reg.whatsapp %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">Email Id: </label>
+                            <span><%= reg.email %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">College: </label>
+                            <span><%= reg.college %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">Committee: </label>
+                            <span><%= reg.committee %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">No. of MUN attended: </label>
+                            <span><%= reg.mun_attended %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold">Country Preferences: </label>
+                            <br>
+                            <label for="" class="fw-bold">First: </label>
+                            <span><%= reg.country[0] %></span>
+                            <br>
+                            <label for="" class="fw-bold">Second: </label>
+                            <span><%= reg.country[1] %></span>
+                            <br>
+                            <label for="" class="fw-bold">Third: </label>
+                            <span><%= reg.country[2] %></span>
+                            <br>
+                            <label for="" class="fw-bold">Fourth: </label>
+                            <span><%= reg.country[3] %></span>
+                        </div>
+                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                            <label for="phone" class="fw-bold mb-3">Payment Screenshot: </label>
+                            <img src="<%= reg.image[0].url %>" class="img-fluid" style="border-radius: 12px;" alt="">
+                        </div>
+                        <button class="btn btn-danger" style="border-radius: 8px;" id="delete">Delete Registration</button>
+                        <br><br>
+                        <div class="mb-3" style="display: none;" id="box">
+                            <form action="/deleteregistration/<%= reg._id %>" method="post">
+                                <input type="text" name="command" class="form-control" placeholder="Enter 'sudo delete <%= reg.phone %>' ">
+                                <button class="btn btn-danger mt-2" style="border-radius: 10px;" type="submit">Confirm</button>
+                            </form>
+                        </div>
+                    <br>
+                    </div>
+            </div>
+        </center>
+    </div>
+    <script>
+        const backbtn= document.getElementById('back')
+        backbtn.addEventListener('click', ()=>{
+            window.location.href='/admindashboard';
+        })
+
+        const del= document.getElementById('delete')
+        const bx= document.getElementById('box')
+
+        del.addEventListener('click', ()=>{
+            bx.style.display= 'block';
+        })
+
+    </script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

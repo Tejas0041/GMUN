@@ -10,14 +10,18 @@ const session= require('express-session');
 const flash= require('express-flash');
 const Registration= require('./models/registrationSchema.js')
 const multer= require('multer')
-const {storage} = require('./cloudinary/cloudinary.js')
+const {storage, cloudinary} = require('./cloudinary/cloudinary.js')
 const upload= multer({storage})
+const passport= require('passport');
+const LocalStrategy= require('passport-local');
 const MongoDBStore= require("connect-mongo");
 // const dbUrl= 'mongodb://localhost:27017/gmun'
 const dbUrl= process.env.DB_URL;
+const Admin= require('./models/adminschema.js');
 const secret= process.env.SECRET || 'thisshouldbeabettersecret'
 const sgMail = require('@sendgrid/mail');
 const sgMailApi= process.env.SENDGRID_API;
+const {isAdmin}= require('./middleware.js');
 
 sgMail.setApiKey(sgMailApi);
 
@@ -61,10 +65,18 @@ const sessionConfig= {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
+
+passport.use(new LocalStrategy(Admin.authenticate()));
 
 app.use((req, res, next)=>{
     res.locals.success= req.flash('success');
     res.locals.error= req.flash('error');
+    res.locals.currentUser= req.user;
     next();
 });
 
@@ -91,8 +103,8 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
     try{
         const {evtname}= req.params;
         const cmt= mp[evtname];
-        const {name, phone, whatsapp, email, mun_attended, country}=req.body;
-        const newReg= new Registration({name, phone, whatsapp, email, mun_attended, country});
+        const {name, phone, whatsapp, email, mun_attended, college, country}=req.body;
+        const newReg= new Registration({name, phone, whatsapp, email, mun_attended, college, country});
 
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
 
@@ -155,6 +167,60 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         req.flash('error', "There was an error occured while making your registration")
         res.redirect('/')
     }
+})
+
+app.get('/adminlogin', (req, res)=>{
+    res.render('templates/adminlogin.ejs');
+})
+
+app.get('/admindashboard', isAdmin, async(req, res)=>{
+    const registrations= await Registration.find({});
+    // const username= '';
+    // const password= '';
+    // const u= new Admin({username});
+    // const newUser= await Admin.register(u, password);
+    console.log(registrations)
+    res.render('templates/admindashboard.ejs', {registrations});
+})
+
+app.post('/adminlogin', passport.authenticate('local', {failureRedirect: '/adminlogin'}), (req, res)=>{
+    return res.redirect('/admindashboard')
+})
+
+app.get('/registrations/:id', isAdmin, async(req, res)=>{
+    const {id}= req.params;
+    const reg= await Registration.findById(id);
+    console.log(reg);
+    res.render('templates/viewregistration.ejs', {reg});
+})
+
+app.post('/deleteregistration/:id', isAdmin, async(req, res)=>{
+    const {id}= req.params;
+    const {command}= req.body;
+    const r= await Registration.findById(id);
+
+    if(command!==`sudo delete ${r.phone}`){
+        return res.send('Incorrect Command')
+    }
+
+    const filename= r.image[0].filename;
+    const reg= await Registration.findByIdAndDelete(id);
+    try{
+        await cloudinary.uploader.destroy(filename);
+        console.log(`Successfully delete image for ${r.name}, ${r.phone}`)
+    }catch(e){
+        console.log('Error', e);
+    }
+    res.redirect('/admindashboard');
+})
+
+app.get('/logout', (req, res)=>{
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/adminlogin');
+    });
 })
 
 app.listen(8080, ()=>{
