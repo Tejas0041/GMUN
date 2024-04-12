@@ -88,3 +88,12 @@ body {
 		top: 3px;
 	}
 }
+
+.bdr{
+    border: 1px solid white;
+	box-shadow: 0 0 8px 1px #5e46119e;
+}
+
+.bdr1{
+    border: 1px solid white;
+}
