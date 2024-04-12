@@ -97,3 +97,17 @@ body {
 .bdr1{
     border: 1px solid white;
 }
+
+@media (max-width: 767px) {
+	.navbar-nav .nav-link {
+	  background-color: white; /* Set background color to white */
+	  color: black; /* Set text color to black */
+	  padding: 10px 15px; /* Add padding to improve touch target */
+	  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+	  display: block; /* Ensure navlinks are displayed as block elements */
+	  margin: 5px 0; /* Add margin for spacing between navlinks */
+	}
+	.home{
+		margin-top: 5px;
+	}
+  }
