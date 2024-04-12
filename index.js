@@ -238,6 +238,10 @@ app.get('/logout', (req, res)=>{
     });
 })
 
+app.get('*', (req, res)=>{
+    res.redirect('/');
+})
+
 app.listen(8080, ()=>{
     console.log('Server started successfully on port 8080')
 })
