@@ -104,7 +104,7 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
     try{
         const {evtname}= req.params;
         const cmt= mp[evtname];
-        const {name, phone, whatsapp, email, mun_attended, college, country}=req.body;
+        const {name, phone, whatsapp, email, mun_attended, college, othercollege, country}=req.body;
         const newReg= new Registration({name, phone, whatsapp, email, mun_attended, college, country});
 
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
@@ -128,6 +128,7 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         var formattedDate = hours + ':' + minutes + ':' + seconds + ', ' + day + '-' + month + '-' + year;
         newReg.date= formattedDate;
 
+        if(newReg.college=="others") newReg.college= othercollege;
         await newReg.save();
 
         const msg = {

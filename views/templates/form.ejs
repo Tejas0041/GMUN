@@ -179,7 +179,20 @@
         <div class="column">
           <div class="input-box">
             <label>College</label>
-            <input type="text" placeholder="College Name" name="college" required />
+            <div class="select-box">
+              <select id="collegeSelect" name="college" required onchange="showTextBox()">
+                <option value="IIEST Shibpur">IIEST Shibpur</option>
+                <option value="others">Others</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div id="otherCollegeBox" class="input-box" style="display:none;">
+            <label>Enter your college name:</label>
+            <br>
+            <input type="text" id="otherCollegeInput" placeholder="College Name" name="othercollege">
           </div>
         </div>
 
@@ -259,14 +272,20 @@
         </div>
         <br>
         <div>
-          <label for="qr">QR Code <br><b>Registration cost →</b> <br> ● With Accomodation: ₹1000 <br> ● Without Accomodation: ₹500 <br> </label>
-          <br><br>
-          <center>
-            <img id="qr" src="/images/qr_sadhan.jpeg" width="75%" style="border-radius: 15px;" alt="">
-          </center>
+
+          <div id="qr-pic" style="display: none;">
+            <label for="qr">QR Code <br><b>Registration cost →</b> <br> ● With Accomodation: ₹1000 <br> ● Without Accomodation: ₹500 <br> </label>
+            <br><br>
+            <center>
+              <img id="qr" src="/images/qr_sadhan.jpeg" width="75%" style="border-radius: 15px;" alt="">
+            </center>
+          </div>
+
           <div class="mb-3">
             <br>
-            <label for="formFile" class="form-label">Upload screenshot of the payment reciept</label>
+            <label for="formFile" id="qr-label" style="display: none;" class="form-label">Upload screenshot of the payment reciept</label>
+            <label for="formFile" id="id-card" class="form-label">Upload image of your college ID card</label>
+
             <input class="form-control" name="image" type="file" id="formFile" required>
           </div>
         </div>
@@ -280,6 +299,32 @@
         <button>Submit</button>
       </form>
     </section>
+
+    <script>
+      function showTextBox() {
+      var selectBox = document.getElementById("collegeSelect");
+      var otherCollegeBox = document.getElementById("otherCollegeBox");
+      var otherCollegeInput = document.getElementById("otherCollegeInput");
+      var idCardLabel= document.getElementById("id-card")
+      var qrLabel= document.getElementById("qr-label")
+      var qrSection= document.getElementById("qr-pic");
+
+        if (selectBox.value === "others") {
+          otherCollegeBox.style.display = "block";
+          otherCollegeInput.setAttribute("required", "required");
+          qrLabel.style.display=="block";
+          qrSection.style.display= "block"
+          idCardLabel.style.display= "none";
+        } else {
+          otherCollegeBox.style.display = "none";
+          otherCollegeInput.removeAttribute("required");
+          idCardLabel.style.display= "block";
+          qrLabel.style.display= "none";
+          qrSection.style.display= "none";
+        }
+      }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   </body>
