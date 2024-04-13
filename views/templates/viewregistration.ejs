@@ -47,23 +47,29 @@
                             <label for="phone" class="fw-bold">No. of MUN attended: </label>
                             <span><%= reg.mun_attended %></span>
                         </div>
+
+                        <% if(reg.preference.length>0){ %>
+                            <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
+                                <label for="phone" class="fw-bold">Preferences: </label>
+                                <br>
+                                <label for="" class="fw-bold">First: </label>
+                                <span><%= reg.preference[0] %></span>
+                                <br>
+                                <% if(reg.preference.length>1){ %>
+                                    <label for="" class="fw-bold">Second: </label>
+                                    <span><%= reg.preference[1] %></span>
+                                    <br>
+                                    <label for="" class="fw-bold">Third: </label>
+                                    <span><%= reg.preference[2] %></span>
+                                    <br>
+                                    <label for="" class="fw-bold">Fourth: </label>
+                                    <span><%= reg.preference[3] %></span>
+                                <% } %>
+                            </div>
+                        <% } %>
+
                         <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
-                            <label for="phone" class="fw-bold">Country Preferences: </label>
-                            <br>
-                            <label for="" class="fw-bold">First: </label>
-                            <span><%= reg.country[0] %></span>
-                            <br>
-                            <label for="" class="fw-bold">Second: </label>
-                            <span><%= reg.country[1] %></span>
-                            <br>
-                            <label for="" class="fw-bold">Third: </label>
-                            <span><%= reg.country[2] %></span>
-                            <br>
-                            <label for="" class="fw-bold">Fourth: </label>
-                            <span><%= reg.country[3] %></span>
-                        </div>
-                        <div class="mb-3" style="text-align: left; border: 1px solid white; padding: 10px; border-radius: 8px;">
-                            <label for="phone" class="fw-bold mb-3">Payment Screenshot: </label>
+                            <label for="phone" class="fw-bold mb-3">Uploaded Image: </label>
                             <img src="<%= reg.image[0].url %>" class="img-fluid" style="border-radius: 12px;" alt="">
                         </div>
                         <button class="btn btn-danger" style="border-radius: 8px;" id="delete">Delete Registration</button>

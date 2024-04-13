@@ -203,77 +203,155 @@
           </div>
         </div>
 
-        <div class="input-box">
-          <label>Country Prefence (1st)</label>
-          <div class="column">
-            <div class="select-box">
-              <select name="country[0]" required>
-                <option value="India">India</option>
-                <option value="Japan">Japan</option>
-                <option value="America">America</option>
-                <option value="Nepal">Nepal</option>
-                <option value="Israel">Israel</option>
-                <option value="China">China</option>
-                <option value="Bangladesh">Bangladesh</option>
-              </select>
+        <% if(name=="unsc"){ %>
+          <div class="input-box">
+            <label>Country Prefence (1st)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[0]" required>
+                  <%- include('./unsc_options.ejs') %>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div class="input-box">
-          <label>Country Prefence (2nd)</label>
-          <div class="column">
-            <div class="select-box">
-              <select name="country[1]" required>
-                <option value="India">India</option>
-                <option value="Japan">Japan</option>
-                <option value="America">America</option>
-                <option value="Nepal">Nepal</option>
-                <option value="Israel">Israel</option>
-                <option value="China">China</option>
-                <option value="Bangladesh">Bangladesh</option>
-              </select>
+          <br>
+          <div class="input-box">
+            <label>Country Prefence (2nd)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[1]" required>
+                  <%- include('./unsc_options.ejs') %>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div class="input-box">
-          <label>Country Prefence (3rd)</label>
-          <div class="column">
-            <div class="select-box">
-              <select name="country[2]" required>
-                <option value="India">India</option>
-                <option value="Japan">Japan</option>
-                <option value="America">America</option>
-                <option value="Nepal">Nepal</option>
-                <option value="Israel">Israel</option>
-                <option value="China">China</option>
-                <option value="Bangladesh">Bangladesh</option>
-              </select>
+          <br>
+          <div class="input-box">
+            <label>Country Prefence (3rd)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[2]" required>
+                  <%- include('./unsc_options.ejs') %>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div class="input-box">
-          <label>Country Prefence (4th)</label>
-          <div class="column">
-            <div class="select-box">
-              <select name="country[3]" required>
-                <option value="India">India</option>
-                <option value="Japan">Japan</option>
-                <option value="America">America</option>
-                <option value="Nepal">Nepal</option>
-                <option value="Israel">Israel</option>
-                <option value="China">China</option>
-                <option value="Bangladesh">Bangladesh</option>
-              </select>
+          <br>
+          <div class="input-box">
+            <label>Country Prefence (4th)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[3]" required>
+                  <%- include('./unsc_options.ejs') %>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div>
-
-          <div id="qr-pic" style="display: none;">
+        <% } else if(name=="unhrc"){ %>
+          <div class="input-box">
+            <label>Country Prefence (1st)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[0]" required>
+                  <%- include('./unhrc_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="input-box">
+            <label>Country Prefence (2nd)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[1]" required>
+                  <%- include('./unhrc_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="input-box">
+            <label>Country Prefence (3rd)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[2]" required>
+                  <%- include('./unhrc_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="input-box">
+            <label>Country Prefence (4th)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[3]" required>
+                  <%- include('./unhrc_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+        <% }else if(name=="loksabha"){ %>
+          <div class="input-box">
+            <label>Party Preference (1st)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[0]" required>
+                  <%- include('./loksabha_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="input-box">
+            <label>Party Prefence (2nd)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[1]" required>
+                  <%- include('./loksabha_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="input-box">
+            <label>Party Prefence (3rd)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[2]" required>
+                  <%- include('./loksabha_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="input-box">
+            <label>Party Prefence (4th)</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[3]" required>
+                  <%- include('./loksabha_options.ejs') %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+        <% }else if(name=="ip"){ %>
+          <div class="input-box">
+            <label>Portfolio Preference</label>
+            <div class="column">
+              <div class="select-box">
+                <select name="preference[0]" required>
+                  <option value="Photographer" selected>Photographer</option>
+                  <option value="Reporter">Reporter</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        <% } %>
+          <div>
+            <div id="qr-pic" style="display: none;">
+            <br>
             <label for="qr">QR Code <br><b>Registration cost →</b> <br> ● With Accomodation: ₹1000 <br> ● Without Accomodation: ₹500 <br> </label>
             <br><br>
             <center>

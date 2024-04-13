@@ -104,8 +104,8 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
     try{
         const {evtname}= req.params;
         const cmt= mp[evtname];
-        const {name, phone, whatsapp, email, mun_attended, college, othercollege, country}=req.body;
-        const newReg= new Registration({name, phone, whatsapp, email, mun_attended, college, country});
+        const {name, phone, whatsapp, email, mun_attended, college, othercollege, preference}=req.body;
+        const newReg= new Registration({name, phone, whatsapp, email, mun_attended, college, preference});
 
         newReg.image =req.files.map(f=>({url:f.path, filename: f.filename}));
         newReg.committee= cmt;
