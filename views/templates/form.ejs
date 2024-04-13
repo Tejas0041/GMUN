@@ -306,13 +306,13 @@
       var otherCollegeBox = document.getElementById("otherCollegeBox");
       var otherCollegeInput = document.getElementById("otherCollegeInput");
       var idCardLabel= document.getElementById("id-card")
-      var qrLabel= document.getElementById("qr-label")
+      var qrLabel= document.getElementById("qr-label");
       var qrSection= document.getElementById("qr-pic");
 
         if (selectBox.value === "others") {
           otherCollegeBox.style.display = "block";
           otherCollegeInput.setAttribute("required", "required");
-          qrLabel.style.display=="block";
+          qrLabel.style.display="block";
           qrSection.style.display= "block"
           idCardLabel.style.display= "none";
         } else {
