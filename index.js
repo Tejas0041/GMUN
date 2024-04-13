@@ -84,7 +84,7 @@ app.use((req, res, next)=>{
 
 const mp= {
     'unsc': 'United Nations Security Council',
-    'unhrc': 'United Nations Human Rights Council',
+    'unhrc': 'United Nations Human Rights Council (Online)',
     'ip': 'International Press',
     'loksabha': 'Loksabha',
     'hogwarts': 'Hogwarts'
