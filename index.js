@@ -131,7 +131,7 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
         if(newReg.college=="others") newReg.college= othercollege;
         await newReg.save();
 
-        const msg = {
+        const msg1 = {
             to: `${email}`,
             from: 'tejaspawar62689@gmail.com',
             subject: 'Registration Confirmation: Global Model United Nations Event by Debsoc, IIEST Shibpur',
@@ -176,8 +176,61 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
             `,
         };
 
-        sgMail.send(msg)
+        const msg2 = {
+            to: `2022csb059.tejas@students.iiests.ac.in`,
+            from: 'tejaspawar62689@gmail.com',
+            subject: 'New Registration for GMUN',
+            html: `
+            <div>
+
+            Hurray!! We had a new registration from ${name}
+            <br><br>
+            <div>
+            Here are the details:- <br>
+            Name: ${name} <br>
+            Phone No.: ${phone} <br>
+            Whatsapp No.: ${whatsapp} <br>
+            Email Id: ${email} <br>
+            College: ${college} <br>
+            Comittee: ${cmt} <br> <br>
+            </div>
+
+                <div style="display: flex; max-width: 350px; background-color:#181818; color:white; border-radius: 8px; margin-left: 2px">
+                    <div>
+                        <img style="max-width: 135px;" src="https://res.cloudinary.com/di7h49uue/image/upload/v1712674109/GMUN_IIEST_SHibpur_4_zdybku.png" alt="">
+                    </div>
+                    <hr>
+                    <div style="font-size: 10px; padding: 3px">
+                        <h5>IIEST GLOBAL MODEL UNITED NATIONS</h5>
+                        <h6>IIEST, Shibpur</h6>
+                        <div style="font-size: 8px;">
+                            <div>+91 8447436195 | iiestgmun@gmail.com</div>
+                            <div>Botanical Garden Area, Howrah <br> WB (711103)</div>
+                        </div>
+                        <br>
+                        <div style="display: flex;">
+                            <div style="margin-right: 8px;">
+                                <a href="https://www.instagram.com/debsociiests?igsh=MTJ2cGczM3UxZ3o4aw==" target="_blank">
+                                    <img style="max-width: 20px;" src="https://i2.wp.com/www.multarte.com.br/wp-content/uploads/2019/03/logo-instagram-png-fundo-transparente13.png?fit=2400,2400&ssl=1" alt="">
+                                </a>
+                            </div>
+                            <div>
+                                <a href="https://www.linkedin.com/company/debsoc-iiest-shibpur/" target="_blank">
+                                    <img style="max-width: 19px;" src="https://pngimg.com/d/linkedIn_PNG16.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+        };
+
+        sgMail.send(msg1)
         .then(() => console.log(`Email sent: ${email} | ${cmt} | ${phone}`))
+        .catch(error => console.error(error));
+
+        sgMail.send(msg2)
+        .then(() => console.log(`Email sent to Admin for registration id ${newReg._id}`))
         .catch(error => console.error(error));
 
         res.redirect('/')
