@@ -138,7 +138,7 @@ app.post('/register/:evtname', upload.array('image'), async(req, res)=>{
             html: `
             <div>
                 Dear ${name}, <br> <br>
-                We are delighted to confirm your commitee registration <b>(${cmt})</b> for the  Global Model United Nations event organized by Debsoc at IIEST Shibpur. We are thrilled to have you join us for this enriching experience.
+                We are delighted to confirm your registration for the  Global Model United Nations event organized by Debsoc at IIEST Shibpur. We are thrilled to have you join us for this enriching experience.
                 <br> <br>
 
                 Warm regards, <br>
