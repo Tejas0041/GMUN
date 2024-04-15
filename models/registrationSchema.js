@@ -15,6 +15,7 @@ const regSchema= new mongoose.Schema({
     committee: String,
     preference: Array,
     date: String,
+    enrollment: String,
     image: [ImageSchema]
 })
 
